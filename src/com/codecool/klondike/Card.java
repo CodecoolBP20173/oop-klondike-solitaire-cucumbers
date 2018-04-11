@@ -122,5 +122,27 @@ public class Card extends ImageView {
             }
         }
     }
+    public enum CardSuit {
+        HEARTS,
+        DIAMONDS,
+        SPADES,
+        CLUBS
+    }
+
+    public enum CardRank {
+        ACES,
+        TWO,
+        THREE,
+        FOUR,
+        FIVE,
+        SIX,
+        SEVEN,
+        EIGHT,
+        NINE,
+        TEN,
+        JUMBO,
+        QUEEN,
+        KING
+    }
 
 }
