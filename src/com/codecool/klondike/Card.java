@@ -52,7 +52,7 @@ public class Card extends ImageView {
     public String getShortName() {
         //"S" + suitName + "R" + cardRank
         System.out.println("get short name: " + suit + rank);
-        return suit + rank;
+        return "S" + suit + "R" + rank;
     }
 
     public DropShadow getDropShadow() {
@@ -117,6 +117,7 @@ public class Card extends ImageView {
 
     private static String[][] createOrderedCards() {
         String suitName = "";
+        String suitNameDetailed;
         String[][] orderedCards = new String[3][52]; //1st for cardNames, 2nd for cardIds
         int counter = 0;
 
@@ -125,11 +126,14 @@ public class Card extends ImageView {
 
 
         for (CardSuit suit : CardSuit.values()) {
-            suitName = suit.getName();
+            suitName = suit.getSuitName();
+            suitNameDetailed = suit.getSuitNameDetailed();
             for (CardRank rank : CardRank.values()) {
-                int cardRank = rank.getNumber();
+                int cardRank = rank.getRankNumber();
+                String cardRankDetailed = rank.getRankString();
+
                 String cardName = suitName + cardRank;
-                String cardNameDetailed = suitName + ";" + cardRank;
+                String cardNameDetailed = suitNameDetailed + ";" + cardRankDetailed;
                 //System.out.println(cardName);
                 orderedCards[0][counter] = cardName;
                 orderedCards[1][counter] = "S" + suit + "R" + rank;
@@ -209,7 +213,7 @@ public class Card extends ImageView {
         SPADES,
         CLUBS;
 
-        public String getName() {
+        public String getSuitName() {
             String suitname = this.toString();
             suitname = suitname.toLowerCase();
             return suitname;
@@ -219,6 +223,10 @@ public class Card extends ImageView {
                 suitname.toLowerCase();
                 System.out.println(suitname);
             } */
+
+        }
+        public String getSuitNameDetailed() {
+            return this.toString();
 
         }
     }
@@ -238,8 +246,11 @@ public class Card extends ImageView {
         QUEEN,
         KING;
 
-        public int getNumber() {
+        public int getRankNumber() {
             return ordinal() + 1;
+        }
+        public String getRankString() {
+            return this.toString();
         }
     }
 }
