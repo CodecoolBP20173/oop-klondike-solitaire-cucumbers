@@ -100,19 +100,47 @@ public class Card extends ImageView {
     public static void loadCardImages() {
         cardBackImage = new Image("card_images/card_back.png");
         String suitName = "";
+        List<String> cardNamesOrdered = new LinkedList<>();
+        List<String> cardIdsOrdered = new LinkedList<>();
         for (CardSuit suit : CardSuit.values()) {
             suitName = suit.getName();
             for (CardRank rank : CardRank.values()) {
                 int cardRank = rank.getNumber();
-                String cardName = suitName + cardRank;
-                System.out.println(cardName);
-                String cardId = "S" + suit + "R" + rank;
-                System.out.println("cardid: " + cardId);
-                String imageFileName = "card_images/" + cardName + ".png";
-                cardFaceImages.put(cardId, new Image(imageFileName));
+                //String cardName = suitName + cardRank;
+                //System.out.println(cardName);
+                cardNamesOrdered.add(suitName + cardRank);
+                cardIdsOrdered.add("S" + suit + "R" + rank);
+                //String cardId = "S" + suit + "R" + rank;
+                //System.out.println("cardid: " + cardId);
+            }
+        }
+        System.out.println(cardNamesOrdered);
+        System.out.println(cardIdsOrdered);
+        //randomising cards
+        List<String> cardNames = new LinkedList<>();
+        List<String> cardIds = new LinkedList<>();
+        for (int i = 0; i < cardNamesOrdered.size(); i++) {
+            while (true) {
+                Random rand = new Random();
+                int random = rand.nextInt(cardNamesOrdered.size());
+                if (!cardNames.contains(cardNamesOrdered.get(random))) {
+                    cardNames.add(cardNamesOrdered.get(random));
+                    cardIds.add(cardIdsOrdered.get(random));
+
+                    String cardName = cardNamesOrdered.get(random);
+                    String cardId = cardIdsOrdered.get(random);
+                    String imageFileName = "card_images/" + cardName + ".png";
+                    cardFaceImages.put(cardId, new Image(imageFileName));
+                    break;
                 }
             }
         }
+        System.out.println(cardIds);
+        System.out.println(cardNames);
+
+
+    }
+
     public enum CardSuit {
         HEARTS,
         DIAMONDS,
@@ -148,8 +176,8 @@ public class Card extends ImageView {
         QUEEN,
         KING;
 
-       public int getNumber(){
-            return ordinal()+1;
-       }
+        public int getNumber() {
+            return ordinal() + 1;
+        }
     }
 }
