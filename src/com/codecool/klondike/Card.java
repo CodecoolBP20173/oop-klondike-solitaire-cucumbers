@@ -30,20 +30,9 @@ public class Card extends ImageView {
         this.dropShadow = new DropShadow(2, Color.gray(0, 0.75));
         backFace = cardBackImage;
         frontFace = cardFaceImages.get(getShortName());
-        //String shortName = "S" + suit + "R" + rank;
-        //frontFace = cardFaceImages.get(shortName);
         setImage(faceDown ? backFace : frontFace);
         setEffect(dropShadow);
     }
-
-    /*public CardSuit getSuit() {
-        return suit;
-    }
-
-    public CardRank getRank() {
-        return rank;
-    }
-    */
 
     public boolean isFaceDown() {
         return faceDown;
@@ -106,12 +95,6 @@ public class Card extends ImageView {
             result.add(new Card(suit, rank, true));
 
         }
-
-        /*for (CardSuit suit : CardSuit.values()) {
-            for (CardRank rank : CardRank.values()) {
-                result.add(new Card(suit, rank, true));
-            }
-        }*/
         return result;
     }
 
@@ -120,10 +103,6 @@ public class Card extends ImageView {
         String suitNameDetailed;
         String[][] orderedCards = new String[3][52]; //1st for cardNames, 2nd for cardIds
         int counter = 0;
-
-        //List<String> cardNamesOrdered = new LinkedList<>();
-        //List<String> cardIdsOrdered = new LinkedList<>();
-
 
         for (CardSuit suit : CardSuit.values()) {
             suitName = suit.getSuitName();
@@ -134,16 +113,10 @@ public class Card extends ImageView {
 
                 String cardName = suitName + cardRank;
                 String cardNameDetailed = suitNameDetailed + ";" + cardRankDetailed;
-                //System.out.println(cardName);
                 orderedCards[0][counter] = cardName;
                 orderedCards[1][counter] = "S" + suit + "R" + rank;
                 orderedCards[2][counter] = cardNameDetailed;
                 counter += 1;
-
-                //cardNamesOrdered.add(suitName + cardRank);
-                //cardIdsOrdered.add("S" + suit + "R" + rank);
-                //String cardId = "S" + suit + "R" + rank;
-                //System.out.println("cardid: " + cardId);
             }
         }
         return orderedCards;
@@ -154,12 +127,8 @@ public class Card extends ImageView {
         String[] cardNamesOrdered = orderedCards[0];
         String[] cardIdsOrdered = orderedCards[1];
         String[] cardNamesOrderedDetailed = orderedCards[2];
-
         String[][] randomisedCards = new String[3][52];
-        //System.out.println(cardNamesOrdered);
-        //System.out.println(cardIdsOrdered);
 
-        //randomising cards
         List<String> cardNames = new LinkedList<>();
         List<String> cardIds = new LinkedList<>();
         List<String> cardNamesDetailed = new LinkedList<>();
@@ -217,13 +186,6 @@ public class Card extends ImageView {
             String suitname = this.toString();
             suitname = suitname.toLowerCase();
             return suitname;
-            /*
-            for (CardSuit suit : CardSuit.values()) {
-                String suitname = suit.toString();
-                suitname.toLowerCase();
-                System.out.println(suitname);
-            } */
-
         }
         public String getSuitNameDetailed() {
             return this.toString();
