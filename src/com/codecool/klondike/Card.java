@@ -29,9 +29,9 @@ public class Card extends ImageView {
         this.faceDown = faceDown;
         this.dropShadow = new DropShadow(2, Color.gray(0, 0.75));
         backFace = cardBackImage;
-        //frontFace = cardFaceImages.get(getShortName());
-        String shortName = "S" + suit + "R" + rank;
-        frontFace = cardFaceImages.get(shortName);
+        frontFace = cardFaceImages.get(getShortName());
+        //String shortName = "S" + suit + "R" + rank;
+        //frontFace = cardFaceImages.get(shortName);
         setImage(faceDown ? backFace : frontFace);
         setEffect(dropShadow);
     }
@@ -51,8 +51,8 @@ public class Card extends ImageView {
 
     public String getShortName() {
         //"S" + suitName + "R" + cardRank
-        System.out.println("get short name:  SSS" + suit + "RRR" + rank);
-        return "SSS" + suit + "RRR" + rank;
+        System.out.println("get short name: " + suit + rank);
+        return suit + rank;
     }
 
     public DropShadow getDropShadow() {
@@ -195,6 +195,8 @@ public class Card extends ImageView {
             String cardName = cardNames[i];
             String imageFileName = "card_images/" + cardName + ".png";
             String cardId = cardIds[i];
+            System.out.println("cardname: " + cardName);
+            System.out.println("cardid: " + cardId);
             cardFaceImages.put(cardId, new Image(imageFileName));
             System.out.println(cardId);
             System.out.println(cardName);
