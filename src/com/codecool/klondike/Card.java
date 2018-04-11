@@ -9,8 +9,8 @@ import java.util.*;
 
 public class Card extends ImageView {
 
-    private CardSuit suit;
-    private CardRank rank;
+    private String suit;
+    private String rank;
     private boolean faceDown;
 
     private Image backFace;
@@ -23,24 +23,27 @@ public class Card extends ImageView {
     public static final int WIDTH = 150;
     public static final int HEIGHT = 215;
 
-    public Card(CardSuit suit, CardRank rank, boolean faceDown) {
+    public Card(String suit, String rank, boolean faceDown) {
         this.suit = suit;
         this.rank = rank;
         this.faceDown = faceDown;
         this.dropShadow = new DropShadow(2, Color.gray(0, 0.75));
         backFace = cardBackImage;
-        frontFace = cardFaceImages.get(getShortName());
+        //frontFace = cardFaceImages.get(getShortName());
+        String shortName = "S" + suit + "R" + rank;
+        frontFace = cardFaceImages.get(shortName);
         setImage(faceDown ? backFace : frontFace);
         setEffect(dropShadow);
     }
 
-    public CardSuit getSuit() {
+    /*public CardSuit getSuit() {
         return suit;
     }
 
     public CardRank getRank() {
         return rank;
     }
+    */
 
     public boolean isFaceDown() {
         return faceDown;
@@ -48,7 +51,8 @@ public class Card extends ImageView {
 
     public String getShortName() {
         //"S" + suitName + "R" + cardRank
-        return "S" + suit + "R" + rank;
+        System.out.println("get short name:  SSS" + suit + "RRR" + rank);
+        return "SSS" + suit + "RRR" + rank;
     }
 
     public DropShadow getDropShadow() {
@@ -83,62 +87,118 @@ public class Card extends ImageView {
         return true;
     }
 
-    public static boolean isSameSuit(Card card1, Card card2) {
-        return card1.getSuit().equals(card2.getSuit());
+    public static boolean isSameSuit(String card1, String card2) {
+        //return card1.getSuit().equals(card2.getSuit());
+        return card1.equals(card2);
     }
 
     public static List<Card> createNewDeck() {
         List<Card> result = new ArrayList<>();
-        for (CardSuit suit : CardSuit.values()) {
+
+        //set up result with ordered cards
+        String[][] randomisedCards = createRandomisedCards();
+        String[] cardNamesDetailed = randomisedCards[2];
+
+        for (String cardName : cardNamesDetailed) {
+            String[] cardFullname = cardName.split(";");
+            String suit = cardFullname[0];
+            String rank = cardFullname[1];
+            result.add(new Card(suit, rank, true));
+
+        }
+
+        /*for (CardSuit suit : CardSuit.values()) {
             for (CardRank rank : CardRank.values()) {
                 result.add(new Card(suit, rank, true));
             }
-        }
+        }*/
         return result;
     }
 
-    public static void loadCardImages() {
-        cardBackImage = new Image("card_images/card_back.png");
+    private static String[][] createOrderedCards() {
         String suitName = "";
-        List<String> cardNamesOrdered = new LinkedList<>();
-        List<String> cardIdsOrdered = new LinkedList<>();
+        String[][] orderedCards = new String[3][52]; //1st for cardNames, 2nd for cardIds
+        int counter = 0;
+
+        //List<String> cardNamesOrdered = new LinkedList<>();
+        //List<String> cardIdsOrdered = new LinkedList<>();
+
+
         for (CardSuit suit : CardSuit.values()) {
             suitName = suit.getName();
             for (CardRank rank : CardRank.values()) {
                 int cardRank = rank.getNumber();
-                //String cardName = suitName + cardRank;
+                String cardName = suitName + cardRank;
+                String cardNameDetailed = suitName + ";" + cardRank;
                 //System.out.println(cardName);
-                cardNamesOrdered.add(suitName + cardRank);
-                cardIdsOrdered.add("S" + suit + "R" + rank);
+                orderedCards[0][counter] = cardName;
+                orderedCards[1][counter] = "S" + suit + "R" + rank;
+                orderedCards[2][counter] = cardNameDetailed;
+                counter += 1;
+
+                //cardNamesOrdered.add(suitName + cardRank);
+                //cardIdsOrdered.add("S" + suit + "R" + rank);
                 //String cardId = "S" + suit + "R" + rank;
                 //System.out.println("cardid: " + cardId);
             }
         }
-        System.out.println(cardNamesOrdered);
-        System.out.println(cardIdsOrdered);
+        return orderedCards;
+    }
+
+    private static String[][] createRandomisedCards() {
+        String[][] orderedCards = createOrderedCards();
+        String[] cardNamesOrdered = orderedCards[0];
+        String[] cardIdsOrdered = orderedCards[1];
+        String[] cardNamesOrderedDetailed = orderedCards[2];
+
+        String[][] randomisedCards = new String[3][52];
+        //System.out.println(cardNamesOrdered);
+        //System.out.println(cardIdsOrdered);
+
         //randomising cards
         List<String> cardNames = new LinkedList<>();
         List<String> cardIds = new LinkedList<>();
-        for (int i = 0; i < cardNamesOrdered.size(); i++) {
+        List<String> cardNamesDetailed = new LinkedList<>();
+        for (int i = 0; i < cardNamesOrdered.length; i++) {
             while (true) {
                 Random rand = new Random();
-                int random = rand.nextInt(cardNamesOrdered.size());
-                if (!cardNames.contains(cardNamesOrdered.get(random))) {
-                    cardNames.add(cardNamesOrdered.get(random));
-                    cardIds.add(cardIdsOrdered.get(random));
+                int random = rand.nextInt(cardNamesOrdered.length);
+                if (!cardNames.contains(cardNamesOrdered[random])) {
+                    cardNames.add(cardNamesOrdered[random]);
+                    cardIds.add(cardIdsOrdered[random]);
+                    cardNamesDetailed.add(cardNamesOrderedDetailed[random]);
 
-                    String cardName = cardNamesOrdered.get(random);
+                    /*String cardName = cardNamesOrdered.get(random);
                     String cardId = cardIdsOrdered.get(random);
                     String imageFileName = "card_images/" + cardName + ".png";
-                    cardFaceImages.put(cardId, new Image(imageFileName));
+                    cardFaceImages.put(cardId, new Image(imageFileName));*/
                     break;
                 }
             }
         }
-        System.out.println(cardIds);
-        System.out.println(cardNames);
+        randomisedCards[0] = cardNames.toArray(new String[cardNames.size()]);
+        randomisedCards[1] = cardIds.toArray(new String[cardIds.size()]);
+        randomisedCards[2] = cardNamesDetailed.toArray(new String[cardNamesDetailed.size()]);
+
+        return randomisedCards;
+    }
 
 
+    public static void loadCardImages() {
+        cardBackImage = new Image("card_images/card_back.png");
+
+        String[][] randomisedCards = createRandomisedCards();
+        String[] cardNames = randomisedCards[0];
+        String[] cardIds = randomisedCards[1];
+
+        for (int i = 0; i < cardNames.length; i++) {
+            String cardName = cardNames[i];
+            String imageFileName = "card_images/" + cardName + ".png";
+            String cardId = cardIds[i];
+            cardFaceImages.put(cardId, new Image(imageFileName));
+            System.out.println(cardId);
+            System.out.println(cardName);
+        }
     }
 
     public enum CardSuit {
