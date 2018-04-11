@@ -47,6 +47,7 @@ public class Card extends ImageView {
     }
 
     public String getShortName() {
+        //"S" + suitName + "R" + cardRank
         return "S" + suit + "R" + rank;
     }
 
@@ -105,7 +106,8 @@ public class Card extends ImageView {
                 int cardRank = rank.getNumber();
                 String cardName = suitName + cardRank;
                 System.out.println(cardName);
-                String cardId = "S" + suitName + "R" + cardRank;
+                String cardId = "S" + suit + "R" + rank;
+                System.out.println("cardid: " + cardId);
                 String imageFileName = "card_images/" + cardName + ".png";
                 cardFaceImages.put(cardId, new Image(imageFileName));
                 }
