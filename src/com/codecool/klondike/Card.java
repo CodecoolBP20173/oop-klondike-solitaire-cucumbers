@@ -68,7 +68,8 @@ public class Card extends ImageView {
 
     @Override
     public String toString() {
-        return "The " + "Rank" + rank + " of " + "Suit" + suit;
+        //return "The FUCKING!!!! " + "Rank" + rank + " of " + "Suit" + suit;
+        return suit + ";" + rank;
     }
 
     public static boolean isOppositeColor(Card card1, Card card2) {

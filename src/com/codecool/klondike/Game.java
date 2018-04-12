@@ -146,10 +146,16 @@ public class Game extends Pane {
     }
 
     private boolean isOverPile(Card card, Pile pile) {
-        if (pile.isEmpty())
-            return card.getBoundsInParent().intersects(pile.getBoundsInParent());
-        else
+        if (pile.isEmpty()) {
+            if (isValidMoveToEmptyPile(card)) {
+                System.out.println("isoverpile empty :  " + card.getBoundsInParent().intersects(pile.getBoundsInParent()));
+                return card.getBoundsInParent().intersects(pile.getBoundsInParent());
+            }
+            return false;
+        } else {
+            System.out.println("isoverpile else ág:  " + card.getBoundsInParent().intersects(pile.getTopCard().getBoundsInParent()));
             return card.getBoundsInParent().intersects(pile.getTopCard().getBoundsInParent());
+        }
     }
 
     private void handleValidMove(Card card, Pile destPile) {
@@ -230,9 +236,19 @@ public class Game extends Pane {
                 BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT,
                 BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
     }
-    public Game newGame(){
+    public Game newGame() {
         deck.clear();
-
         return new Game();
     }
+
+    private boolean isValidMoveToEmptyPile(Card card) {
+        //create only rank from cardName
+        String cardName = card.toString();
+        String[] cardNameArray = cardName.split(";");
+        String cardRank = cardNameArray[1];
+
+        String king = Card.CardRank.KING.toString();
+        return cardRank.equals(king);
+    }
+
 }
