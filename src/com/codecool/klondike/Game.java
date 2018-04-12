@@ -215,5 +215,9 @@ public class Game extends Pane {
                 BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT,
                 BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
     }
+    public Game newGame(){
+        deck.clear();
 
+        return new Game();
+    }
 }
