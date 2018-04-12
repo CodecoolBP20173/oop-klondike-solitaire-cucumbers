@@ -72,13 +72,68 @@ public class Card extends ImageView {
     }
 
     public static boolean isOppositeColor(Card card1, Card card2) {
-        //TODO
-        return true;
+        String diamonds = CardSuit.DIAMONDS.toString();
+        String hearts = CardSuit.HEARTS.toString();
+        String clubs = CardSuit.CLUBS.toString();
+        String spades = CardSuit.SPADES.toString();
+        if(((card1.suit == hearts) || (card1.suit == diamonds)) && ((card2.suit == clubs) || (card2.suit == spades))){
+            return true;
+        }
+        if(((card2.suit == hearts) || (card2.suit == diamonds)) && ((card1.suit == clubs) || (card1.suit == spades))){
+            return true;
+        }
+        return false;
     }
 
-    public static boolean isSameSuit(String card1, String card2) {
+    public static boolean isSameSuit(Card card1, Card card2) {
         //return card1.getSuit().equals(card2.getSuit());
-        return card1.equals(card2);
+        /*
+        OR:
+        String suit1 = card1.suit;
+        String suit2 = card2.suit;
+        return suit1.equals(suit2);
+         */
+        return card1.suit.equals(card2.suit);
+    }
+
+    public static boolean isRankValidTableau(Card card1, Card card2) {
+        int card1Rank = 0;
+        int card2Rank = 0;
+        for (CardRank rank : CardRank.values()) {
+            String cardRankDetailed = rank.getRankString();
+            if(cardRankDetailed == card1.rank) {
+                card1Rank = rank.getRankNumber();
+            }
+            if(cardRankDetailed == card2.rank) {
+                card2Rank = rank.getRankNumber();
+            }
+        }
+        if((card1Rank -1) == card2Rank) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public static boolean isRankValidFoundation(Card card1, Card card2) {
+        int card1Rank = 0;
+        int card2Rank = 0;
+        for (CardRank rank : CardRank.values()) {
+            String cardRankDetailed = rank.getRankString();
+            if(cardRankDetailed == card1.rank) {
+                card1Rank = rank.getRankNumber();
+            }
+            if(cardRankDetailed == card2.rank) {
+                card2Rank = rank.getRankNumber();
+            }
+        }
+        if((card1Rank+1) == card2Rank) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public static List<Card> createNewDeck() {
