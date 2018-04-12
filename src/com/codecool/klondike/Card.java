@@ -39,7 +39,6 @@ public class Card extends ImageView {
     }
 
     public String getShortName() {
-        //"S" + suitName + "R" + cardRank
         System.out.println("get short name: " + suit + rank);
         return "S" + suit + "R" + rank;
     }
@@ -68,7 +67,6 @@ public class Card extends ImageView {
 
     @Override
     public String toString() {
-        //return "The FUCKING!!!! " + "Rank" + rank + " of " + "Suit" + suit;
         return suit + ";" + rank;
     }
 
@@ -77,16 +75,17 @@ public class Card extends ImageView {
         String hearts = CardSuit.HEARTS.toString();
         String clubs = CardSuit.CLUBS.toString();
         String spades = CardSuit.SPADES.toString();
-        if((card1.suit.equals(hearts)) || (card1.suit.equals(diamonds))) {
-            if((card2.suit.equals(clubs)) || (card2.suit.equals(spades))){
-            System.out.println("Opposite color true");
-            return true;
-        }}
-        else if((card2.suit.equals(hearts)) || (card2.suit.equals(diamonds))){
-            if((card1.suit.equals(clubs)) || (card1.suit.equals(spades))){
-            System.out.println("Opposite color true");
-            return true;
-        }}
+        if ((card1.suit.equals(hearts)) || (card1.suit.equals(diamonds))) {
+            if ((card2.suit.equals(clubs)) || (card2.suit.equals(spades))) {
+                System.out.println("Opposite color true");
+                return true;
+            }
+        } else if ((card2.suit.equals(hearts)) || (card2.suit.equals(diamonds))) {
+            if ((card1.suit.equals(clubs)) || (card1.suit.equals(spades))) {
+                System.out.println("Opposite color true");
+                return true;
+            }
+        }
         System.out.println(card1.suit);
         System.out.println(card2.suit);
         System.out.println("Opposite color false");
@@ -97,63 +96,61 @@ public class Card extends ImageView {
     public static boolean isSameSuit(Card card1, Card card2) {
         String suit1 = card1.suit;
         String suit2 = card2.suit;
-        if(suit1.equals(suit2)){
+        if (suit1.equals(suit2)) {
             System.out.println("Same suit true");
             return true;
-        }
-        else {
+        } else {
             System.out.println("Same suit false");
             return false;
         }
     }
 
     public static boolean isRankValidTableau(Card card1, Card card2) {
-        if(isOppositeColor(card1, card2)) {
-        int card1Rank = 0;
-        int card2Rank = 0;
-        for (CardRank rank : CardRank.values()) {
-            String cardRankDetailed = rank.getRankString();
-            if(cardRankDetailed.equals(card1.rank)) {
-                card1Rank = rank.getRankNumber();
+        if (isOppositeColor(card1, card2)) {
+            int card1Rank = 0;
+            int card2Rank = 0;
+            for (CardRank rank : CardRank.values()) {
+                String cardRankDetailed = rank.getRankString();
+                if (cardRankDetailed.equals(card1.rank)) {
+                    card1Rank = rank.getRankNumber();
+                }
+                if (cardRankDetailed.equals(card2.rank)) {
+                    card2Rank = rank.getRankNumber();
+                }
             }
-            if(cardRankDetailed.equals(card2.rank)) {
-                card2Rank = rank.getRankNumber();
+            if ((card1Rank - 1) == card2Rank) {
+                System.out.println("Rank validation tableau true");
+                return true;
+            } else {
+                System.out.println("Rank validation tableau false");
+                return false;
             }
-        }
-        if((card1Rank -1) == card2Rank) {
-            System.out.println("Rank validation tableau true");
-            return true;
-        }
-        else {
-            System.out.println("Rank validation tableau false");
+        } else {
             return false;
-        }}
-        else {
-        return false;
-    }}
+        }
+    }
 
     public static boolean isRankValidFoundation(Card card1, Card card2) {
-        if(isSameSuit(card1, card2)) {
-        int card1Rank = 0;
-        int card2Rank = 0;
-        for (CardRank rank : CardRank.values()) {
-            String cardRankDetailed = rank.getRankString();
-            if(cardRankDetailed.equals(card1.rank)) {
-                card1Rank = rank.getRankNumber();
+        if (isSameSuit(card1, card2)) {
+            int card1Rank = 0;
+            int card2Rank = 0;
+            for (CardRank rank : CardRank.values()) {
+                String cardRankDetailed = rank.getRankString();
+                if (cardRankDetailed.equals(card1.rank)) {
+                    card1Rank = rank.getRankNumber();
+                }
+                if (cardRankDetailed.equals(card2.rank)) {
+                    card2Rank = rank.getRankNumber();
+                }
             }
-            if(cardRankDetailed.equals(card2.rank)) {
-                card2Rank = rank.getRankNumber();
+            if ((card1Rank + 1) == card2Rank) {
+                System.out.println("Rank validation foundation true");
+                return true;
+            } else {
+                System.out.println("Rank validation foundation false");
+                return false;
             }
-        }
-        if((card1Rank+1) == card2Rank) {
-            System.out.println("Rank validation foundation true");
-            return true;
-        }
-        else {
-            System.out.println("Rank validation foundation false");
-            return false;
-        }}
-        else {
+        } else {
             return false;
         }
     }
@@ -264,6 +261,7 @@ public class Card extends ImageView {
             suitname = suitname.toLowerCase();
             return suitname;
         }
+
         public String getSuitNameDetailed() {
             return this.toString();
 
@@ -288,6 +286,7 @@ public class Card extends ImageView {
         public int getRankNumber() {
             return ordinal() + 1;
         }
+
         public String getRankString() {
             return this.toString();
         }

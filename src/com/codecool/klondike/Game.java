@@ -84,6 +84,7 @@ public class Game extends Pane {
         Card card = (Card) e.getSource();
         Pile pile = getValidIntersectingPile(card, tableauPiles);
         //TODO
+        card.moveToPile(pile);
         if (pile != null) {
             handleValidMove(card, pile);
         } else {
@@ -132,7 +133,7 @@ public class Game extends Pane {
         }
         else {
             return false;
-        }
+        }//return true;
     }
 
     private Pile getValidIntersectingPile(Card card, List<Pile> piles) {
