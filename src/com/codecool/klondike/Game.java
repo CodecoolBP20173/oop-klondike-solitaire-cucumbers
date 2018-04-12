@@ -82,13 +82,16 @@ public class Game extends Pane {
         if (draggedCards.isEmpty())
             return;
         Card card = (Card) e.getSource();
-        Pile pile = getValidIntersectingPile(card, tableauPiles);
+        Pile tableauPile = getValidIntersectingPile(card, tableauPiles);
+        Pile foundationPile = getValidIntersectingPile(card, foundationPiles);
         //TODO
-        if (pile != null) {
-            handleValidMove(card, pile);
-        } else {
-            draggedCards.forEach(MouseUtil::slideBack);
+
+        isMoveValid(card, foundationPile){
+
         }
+            //handleValidMove(card, tableauPile);
+        draggedCards.forEach(MouseUtil::slideBack);
+
         draggedCards.clear();
     };
 

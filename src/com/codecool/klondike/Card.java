@@ -120,6 +120,10 @@ public class Card extends ImageView {
                 card2Rank = rank.getRankNumber();
             }
         }
+        if(card1Rank == 0 && card2Rank == 13){
+            System.out.println("Rank validation tableau true");
+            return true;
+        }
         if((card1Rank -1) == card2Rank) {
             System.out.println("Rank validation tableau true");
             return true;
@@ -144,6 +148,14 @@ public class Card extends ImageView {
             if(cardRankDetailed.equals(card2.rank)) {
                 card2Rank = rank.getRankNumber();
             }
+        }
+        if(card1Rank == 0 && card2Rank == 1){
+            System.out.println("Rank validation foundation true");
+            return true;
+        }
+        if(card1Rank == 1 && card2Rank == 2) {
+            System.out.println("Rank validation foundation true");
+            return true;
         }
         if((card1Rank+1) == card2Rank) {
             System.out.println("Rank validation foundation true");
