@@ -44,6 +44,9 @@ public class Game extends Pane {
             System.out.println("Placed " + card + " to the waste.");
 
         }
+        if(card.getContainingPile().getTopCard().isFaceDown() ){
+            card.flip();
+        }
     };
 
     private EventHandler<MouseEvent> stockReverseCardsHandler = e -> {
@@ -113,6 +116,7 @@ public class Game extends Pane {
 
     public boolean isMoveValid(Card card, Pile destPile) {
         //TODO
+
         return true;
     }
     private Pile getValidIntersectingPile(Card card, List<Pile> piles) {
