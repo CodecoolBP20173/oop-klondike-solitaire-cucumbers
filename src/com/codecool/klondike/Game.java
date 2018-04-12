@@ -16,6 +16,7 @@ import javafx.scene.layout.Pane;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Collections;
 
 public class Game extends Pane {
 
@@ -97,6 +98,7 @@ public class Game extends Pane {
 
     public Game() {
         deck = Card.createNewDeck();
+
         initPiles();
         dealCards();
     }
@@ -110,6 +112,11 @@ public class Game extends Pane {
 
     public void refillStockFromDiscard() {
         //TODO
+        List<Card> discardPileCards =discardPile.getCards();
+        Collections.reverse(discardPileCards);
+        stockPile.clear();
+        stockPile.addCards(discardPileCards);
+        discardPile.clear();
         System.out.println("Stock refilled from discard pile.");
     }
 
