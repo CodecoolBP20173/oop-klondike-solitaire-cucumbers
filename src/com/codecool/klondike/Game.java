@@ -95,14 +95,17 @@ public class Game extends Pane {
         Pile tableauPile = getValidIntersectingPile(card, tableauPiles);
         Pile foundationPile = getValidIntersectingPile(card, foundationPiles);
         //TODO
-
-        isMoveValid(card, foundationPile){
-
+        if (foundationPile != null) {
+            handleValidMove(card, foundationPile);
         }
-            //handleValidMove(card, tableauPile);
+        if (tableauPile != null) {
+            handleValidMove(card, tableauPile);
+        }
+        else {
         draggedCards.forEach(MouseUtil::slideBack);
-
+        }
         draggedCards.clear();
+
     };
 
     public boolean isGameWon() {
@@ -159,32 +162,19 @@ public class Game extends Pane {
     }
 
     private boolean isOverPile(Card card, Pile pile) {
-        if (pile.isEmpty()) {
-            if (isValidMoveToEmptyPile(card)) {
-                System.out.println("isoverpile empty :  " + card.getBoundsInParent().intersects(pile.getBoundsInParent()));
-                return card.getBoundsInParent().intersects(pile.getBoundsInParent());
-            }
-            return false;
-        } else {
-            System.out.println("isoverpile else ág:  " + card.getBoundsInParent().intersects(pile.getTopCard().getBoundsInParent()));
+        if (pile.isEmpty())
+            return card.getBoundsInParent().intersects(pile.getBoundsInParent());
+        else
             return card.getBoundsInParent().intersects(pile.getTopCard().getBoundsInParent());
-        }
     }
 
     private void handleValidMove(Card card, Pile destPile) {
-        String msg = null;
-        if (destPile.isEmpty()) {
-            if (destPile.getPileType().equals(Pile.PileType.FOUNDATION))
-                msg = String.format("Placed %s to the foundation.", card);
-            if (destPile.getPileType().equals(Pile.PileType.TABLEAU))
-                msg = String.format("Placed %s to a new pile.", card);
-        } else {
-            msg = String.format("Placed %s to %s.", card, destPile.getTopCard());
+        if (isMoveValid(card, destPile)) {
+            MouseUtil.slideToDest(draggedCards, destPile);
         }
-        System.out.println(msg);
-        MouseUtil.slideToDest(draggedCards, destPile);
-        draggedCards.clear();
-    }
+            draggedCards.clear();
+        }
+
 
 
     private void initPiles() {
@@ -249,19 +239,9 @@ public class Game extends Pane {
                 BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT,
                 BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
     }
-    public Game newGame() {
+    public Game newGame(){
         deck.clear();
+
         return new Game();
     }
-
-    private boolean isValidMoveToEmptyPile(Card card) {
-        //create only rank from cardName
-        String cardName = card.toString();
-        String[] cardNameArray = cardName.split(";");
-        String cardRank = cardNameArray[1];
-
-        String king = Card.CardRank.KING.toString();
-        return cardRank.equals(king);
-    }
-
 }
