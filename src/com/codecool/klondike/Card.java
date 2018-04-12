@@ -76,61 +76,82 @@ public class Card extends ImageView {
         String hearts = CardSuit.HEARTS.toString();
         String clubs = CardSuit.CLUBS.toString();
         String spades = CardSuit.SPADES.toString();
-        if(((card1.suit == hearts) || (card1.suit == diamonds)) && ((card2.suit == clubs) || (card2.suit == spades))){
+        if((card1.suit.equals(hearts)) || (card1.suit.equals(diamonds))) {
+            if((card2.suit.equals(clubs)) || (card2.suit.equals(spades))){
+            System.out.println("Opposite color true");
             return true;
-        }
-        if(((card2.suit == hearts) || (card2.suit == diamonds)) && ((card1.suit == clubs) || (card1.suit == spades))){
+        }}
+        else if((card2.suit.equals(hearts)) || (card2.suit.equals(diamonds))){
+            if((card1.suit.equals(clubs)) || (card1.suit.equals(spades))){
+            System.out.println("Opposite color true");
             return true;
-        }
+        }}
+        System.out.println(card1.suit);
+        System.out.println(card2.suit);
+        System.out.println("Opposite color false");
         return false;
+
     }
 
     public static boolean isSameSuit(Card card1, Card card2) {
-        //return card1.getSuit().equals(card2.getSuit());
-        /*
-        OR:
         String suit1 = card1.suit;
         String suit2 = card2.suit;
-        return suit1.equals(suit2);
-         */
-        return card1.suit.equals(card2.suit);
-    }
-
-    public static boolean isRankValidTableau(Card card1, Card card2) {
-        int card1Rank = 0;
-        int card2Rank = 0;
-        for (CardRank rank : CardRank.values()) {
-            String cardRankDetailed = rank.getRankString();
-            if(cardRankDetailed == card1.rank) {
-                card1Rank = rank.getRankNumber();
-            }
-            if(cardRankDetailed == card2.rank) {
-                card2Rank = rank.getRankNumber();
-            }
-        }
-        if((card1Rank -1) == card2Rank) {
+        if(suit1.equals(suit2)){
+            System.out.println("Same suit true");
             return true;
         }
         else {
+            System.out.println("Same suit false");
             return false;
         }
     }
 
-    public static boolean isRankValidFoundation(Card card1, Card card2) {
+    public static boolean isRankValidTableau(Card card1, Card card2) {
+        if(isOppositeColor(card1, card2)) {
         int card1Rank = 0;
         int card2Rank = 0;
         for (CardRank rank : CardRank.values()) {
             String cardRankDetailed = rank.getRankString();
-            if(cardRankDetailed == card1.rank) {
+            if(cardRankDetailed.equals(card1.rank)) {
                 card1Rank = rank.getRankNumber();
             }
-            if(cardRankDetailed == card2.rank) {
+            if(cardRankDetailed.equals(card2.rank)) {
+                card2Rank = rank.getRankNumber();
+            }
+        }
+        if((card1Rank -1) == card2Rank) {
+            System.out.println("Rank validation tableau true");
+            return true;
+        }
+        else {
+            System.out.println("Rank validation tableau false");
+            return false;
+        }}
+        else {
+        return false;
+    }}
+
+    public static boolean isRankValidFoundation(Card card1, Card card2) {
+        if(isSameSuit(card1, card2)) {
+        int card1Rank = 0;
+        int card2Rank = 0;
+        for (CardRank rank : CardRank.values()) {
+            String cardRankDetailed = rank.getRankString();
+            if(cardRankDetailed.equals(card1.rank)) {
+                card1Rank = rank.getRankNumber();
+            }
+            if(cardRankDetailed.equals(card2.rank)) {
                 card2Rank = rank.getRankNumber();
             }
         }
         if((card1Rank+1) == card2Rank) {
+            System.out.println("Rank validation foundation true");
             return true;
         }
+        else {
+            System.out.println("Rank validation foundation false");
+            return false;
+        }}
         else {
             return false;
         }
