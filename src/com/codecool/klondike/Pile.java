@@ -49,7 +49,8 @@ public class Pile extends Pane {
     }
 
     public void clear() {
-        //TODO
+        this.cards.remove(0, this.cards.size());
+
     }
 
     public void addCard(Card card) {
@@ -57,6 +58,13 @@ public class Pile extends Pane {
         card.setContainingPile(this);
         card.toFront();
         layoutCard(card);
+    }
+
+    public void addCards(List<Card> cards) {
+        for(Card card: cards) {
+            card.flip();
+            addCard(card);
+        }
     }
 
     private void layoutCard(Card card) {
