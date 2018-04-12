@@ -96,6 +96,27 @@ public class Card extends ImageView {
         return card1.suit.equals(card2.suit);
     }
 
+    public static boolean isRankValidTableau(Card card1, Card card2) {
+        int card1Rank = 0;
+        int card2Rank = 0;
+
+        for (CardRank rank : CardRank.values()) {
+            String cardRankDetailed = rank.getRankString();
+            if(cardRankDetailed == card1.rank) {
+                card1Rank = rank.getRankNumber();
+            }
+            if(cardRankDetailed == card2.rank) {
+                card2Rank = rank.getRankNumber();
+            }
+        }
+        if((card1Rank -1) == card2Rank) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     public static List<Card> createNewDeck() {
         List<Card> result = new ArrayList<>();
 
