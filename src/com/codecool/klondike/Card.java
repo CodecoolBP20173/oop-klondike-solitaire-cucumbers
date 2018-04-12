@@ -73,13 +73,89 @@ public class Card extends ImageView {
     }
 
     public static boolean isOppositeColor(Card card1, Card card2) {
-        //TODO
-        return true;
+        String diamonds = CardSuit.DIAMONDS.toString();
+        String hearts = CardSuit.HEARTS.toString();
+        String clubs = CardSuit.CLUBS.toString();
+        String spades = CardSuit.SPADES.toString();
+        if((card1.suit.equals(hearts)) || (card1.suit.equals(diamonds))) {
+            if((card2.suit.equals(clubs)) || (card2.suit.equals(spades))){
+            System.out.println("Opposite color true");
+            return true;
+        }}
+        else if((card2.suit.equals(hearts)) || (card2.suit.equals(diamonds))){
+            if((card1.suit.equals(clubs)) || (card1.suit.equals(spades))){
+            System.out.println("Opposite color true");
+            return true;
+        }}
+        System.out.println(card1.suit);
+        System.out.println(card2.suit);
+        System.out.println("Opposite color false");
+        return false;
+
     }
 
-    public static boolean isSameSuit(String card1, String card2) {
-        //return card1.getSuit().equals(card2.getSuit());
-        return card1.equals(card2);
+    public static boolean isSameSuit(Card card1, Card card2) {
+        String suit1 = card1.suit;
+        String suit2 = card2.suit;
+        if(suit1.equals(suit2)){
+            System.out.println("Same suit true");
+            return true;
+        }
+        else {
+            System.out.println("Same suit false");
+            return false;
+        }
+    }
+
+    public static boolean isRankValidTableau(Card card1, Card card2) {
+        if(isOppositeColor(card1, card2)) {
+        int card1Rank = 0;
+        int card2Rank = 0;
+        for (CardRank rank : CardRank.values()) {
+            String cardRankDetailed = rank.getRankString();
+            if(cardRankDetailed.equals(card1.rank)) {
+                card1Rank = rank.getRankNumber();
+            }
+            if(cardRankDetailed.equals(card2.rank)) {
+                card2Rank = rank.getRankNumber();
+            }
+        }
+        if((card1Rank -1) == card2Rank) {
+            System.out.println("Rank validation tableau true");
+            return true;
+        }
+        else {
+            System.out.println("Rank validation tableau false");
+            return false;
+        }}
+        else {
+        return false;
+    }}
+
+    public static boolean isRankValidFoundation(Card card1, Card card2) {
+        if(isSameSuit(card1, card2)) {
+        int card1Rank = 0;
+        int card2Rank = 0;
+        for (CardRank rank : CardRank.values()) {
+            String cardRankDetailed = rank.getRankString();
+            if(cardRankDetailed.equals(card1.rank)) {
+                card1Rank = rank.getRankNumber();
+            }
+            if(cardRankDetailed.equals(card2.rank)) {
+                card2Rank = rank.getRankNumber();
+            }
+        }
+        if((card1Rank+1) == card2Rank) {
+            System.out.println("Rank validation foundation true");
+            return true;
+        }
+        else {
+            System.out.println("Rank validation foundation false");
+            return false;
+        }}
+        else {
+            return false;
+        }
     }
 
     public static List<Card> createNewDeck() {
