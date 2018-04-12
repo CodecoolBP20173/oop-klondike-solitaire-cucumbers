@@ -83,7 +83,6 @@ public class Game extends Pane {
             handleValidMove(card, pile);
         } else {
             draggedCards.forEach(MouseUtil::slideBack);
-            draggedCards = null;
         }
     };
 
@@ -128,10 +127,12 @@ public class Game extends Pane {
     private boolean isOverPile(Card card, Pile pile) {
         if (pile.isEmpty()) {
             if (isValidMoveToEmptyPile(card)) {
+                System.out.println("isoverpile empty :  " + card.getBoundsInParent().intersects(pile.getBoundsInParent()));
                 return card.getBoundsInParent().intersects(pile.getBoundsInParent());
             }
             return false;
         } else {
+            System.out.println("isoverpile else ág:  " + card.getBoundsInParent().intersects(pile.getTopCard().getBoundsInParent()));
             return card.getBoundsInParent().intersects(pile.getTopCard().getBoundsInParent());
         }
     }
