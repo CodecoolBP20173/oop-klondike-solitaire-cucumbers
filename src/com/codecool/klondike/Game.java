@@ -87,7 +87,6 @@ public class Game extends Pane {
             handleValidMove(card, pile);
         } else {
             draggedCards.forEach(MouseUtil::slideBack);
-            draggedCards = null;
         }
     };
 
@@ -115,10 +114,19 @@ public class Game extends Pane {
     }
 
     public boolean isMoveValid(Card card, Pile destPile) {
-        //TODO
-
-        return true;
+        Card topCard = destPile.getTopCard();
+        Pile.PileType PileType = destPile.getPileType();
+        if(PileType == Pile.PileType.FOUNDATION) {
+            return Card.isRankValidFoundation(topCard, card);
+        }
+        if(PileType == Pile.PileType.TABLEAU) {
+            return Card.isRankValidTableau(topCard, card);
+        }
+        else {
+            return false;
+        }
     }
+
     private Pile getValidIntersectingPile(Card card, List<Pile> piles) {
         Pile result = null;
         for (Pile pile : piles) {
